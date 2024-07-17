@@ -18,7 +18,7 @@ body {
 
 .grid {
   position: relative;
-  width: 800px;
+  width: 600px;
   height: 200px; /* Increased height to accommodate images */
   border: 2px solid #000;
   margin-bottom: 20px;
