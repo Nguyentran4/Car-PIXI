@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Race Simulation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Car Race Simulation</h1>
+        <div class="grid">
+            <div id="car1" class="car">
+                <img src="Image/image1.png" alt="Car 1">
+            </div>
+            <div id="car2" class="car">
+                <img src="image/image2.png" alt="Car 2">
+            </div>
+        </div>
+        <div class="controls">
+            <div>
+                <label for="speed1">Car 1 Speed (px/sec): </label>
+                <input type="number" id="speed1" value="50" min="0" max="100">
+            </div>
+            <div>
+                <label for="speed2">Car 2 Speed (px/sec): </label>
+                <input type="number" id="speed2" value="50" min="0" max="100">
+            </div>
+            <button id="startButton">Start Race</button>
+            <button id="resetButton">Reset</button>
+        </div>
+        <div class="timer">
+            <p>Elapsed Time: <span id="timerDisplay">0.0</span> seconds</p>
+        </div>
+    </div>
+    <script src="car.js"></script>
+    <script src="timer.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
