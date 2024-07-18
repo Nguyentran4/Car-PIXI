@@ -70,6 +70,7 @@ document.getElementById('resetButton').addEventListener('click', () => {
     car1.reset();
     car2.reset();
     resetTimer();
+    resetGraph(); // Reset the graph when the cars are reset
     document.getElementById('startButton').disabled = false;
     document.getElementById('resetButton').disabled = true;
     document.querySelector('.result').innerHTML = '';
