@@ -4,6 +4,7 @@ class Car {
       this.speed = speed;
       this.position = 0;
       this.interval = null;
+      this.finishTime = null;
   }
 
   setSpeed(speed) {
@@ -12,7 +13,7 @@ class Car {
 
   start() {
       const gridWidth = document.querySelector('.grid').clientWidth;
-      const maxPosition = gridWidth - 50; // Assuming car width is 50px
+      const maxPosition = gridWidth - 50 - 38; // Assuming car width is 50px
       const totalTime = 10 * 1000; // 10 seconds in milliseconds
       const totalFrames = totalTime / (1000 / 60); // Total frames in 10 seconds
 
@@ -21,6 +22,7 @@ class Car {
           if (this.position >= maxPosition) {
               this.position = maxPosition;
               this.stop();
+              this.finishTime = (elapsedTime / 1000).toFixed(1); // Record the finish time
           }
           
           this.element.style.left = `${this.position}px`;
@@ -36,5 +38,6 @@ class Car {
       this.stop();
       this.position = 0;
       this.element.style.left = '0px';
+      this.finishTime = null;
   }
 }

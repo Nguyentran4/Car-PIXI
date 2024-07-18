@@ -4,8 +4,8 @@ let elapsedTime = 0;
 function startTimer() {
     const timerDisplay = document.getElementById('timerDisplay');
     timerInterval = setInterval(() => {
-        elapsedTime += 0.1;
-        timerDisplay.textContent = elapsedTime.toFixed(1);
+        elapsedTime += 100;
+        timerDisplay.textContent = (elapsedTime / 1000).toFixed(1);
     }, 100);
 }
 

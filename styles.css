@@ -1,27 +1,52 @@
 body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   height: 100vh;
   margin: 0;
   font-family: Arial, sans-serif;
 }
 
-.title1{
-  color: gray;
-  font-family: monospace;
+header {
+  margin-top: 100px;
+  margin-right: 500px;
+  transform: translate(50%,-50%);
+    text-transform: uppercase;
+    font-family: verdana;
+    font-size: 1em;
+    font-weight: 500;
+    color: #123d99;
+    text-shadow: 1px 1px 1px #919191,
+        1px 2px 1px #919191,
+        1px 3px 1px #919191,
+        1px 4px 1px #919191,
+        1px 5px 1px #919191,
+        1px 6px 1px #919191,
+        1px 7px 1px #919191,
+        1px 8px 1px #919191,
+        1px 9px 1px #919191,
+        1px 10px 1px #919191,
+    1px 18px 6px rgba(16,16,16,0.4),
+    1px 22px 10px rgba(16,16,16,0.2),
+    1px 25px 35px rgba(16,16,16,0.2),
+    1px 30px 60px rgba(16,16,16,0.4);
 }
 
+
+
 .container {
+  display: flex;
+  flex-direction: row;
   text-align: center;
 }
 
 .grid {
   position: relative;
-  width: 600px;
-  height: 200px; /* Increased height to accommodate images */
+  width: 700px;
+  height: 150px; /* Increased height to accommodate images */
   border: 2px solid #000;
   margin-bottom: 20px;
+  margin-right: 50px; /* Add spacing between grid and controls */
 }
 
 .car {
@@ -45,15 +70,42 @@ body {
   transform: translateY(-50%);
 }
 
+
+.finish-line {
+  position: absolute;
+  right: 5.9%;
+  width: 2px;
+  height: 100%;
+  background-color: red;
+  z-index: -1;
+}
+
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .controls {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 20px;
+}
+
+.controls div,
+.controls button {
+  margin-bottom: 10px;
 }
 
 .timer {
-  margin-top: 20px;
-  margin-left: 250px; /* Adjust the value as needed */
   font-size: 1.2em;
-  font-size: 18px;
+  text-align: center;
+}
+
+.result {
+  font-size: 1.2em;
+  color: rgb(29, 93, 129);
+  font-family: Bradley Hand, cursive;
 }
