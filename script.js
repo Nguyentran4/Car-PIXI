@@ -15,8 +15,8 @@ document.getElementById('startButton').addEventListener('click', () => {
         document.querySelector('.result').innerHTML = "";
         speedcar1 = document.getElementById('speed1').value;
         speedcar2 = document.getElementById('speed2').value;
-       
-       
+
+
         if(isFloat(speedcar1) === true){
             document.querySelector('.result').innerHTML = "The speed only works in whole number. Please try a different numbers.";
             return;
@@ -25,19 +25,19 @@ document.getElementById('startButton').addEventListener('click', () => {
             return;
         }
 
-    car1.setSpeed(parseInt(speedcar1));
-    car2.setSpeed(parseInt(speedcar2));
-    
-    if (car1.speed > 150 || car1.speed < 0){
-        document.querySelector('.result').innerHTML = "The speed range is from 0 - 150 px/sec. Please try a different numbers.";
-        return;
-    } else if (car2.speed > 150 || car2.speed < 0){
-        document.querySelector('.result').innerHTML = "The speed range is from 0 - 150 px/sec. Please try a different numbers.";
-        return;
-    } else {
-        isLimit = false;
+        car1.setSpeed(parseInt(speedcar1));
+        car2.setSpeed(parseInt(speedcar2));
+
+        if (car1.speed > 150 || car1.speed < 0){
+            document.querySelector('.result').innerHTML = "The speed range is from 0 - 150 px/sec. Please try a different numbers.";
+            return;
+        } else if (car2.speed > 150 || car2.speed < 0){
+            document.querySelector('.result').innerHTML = "The speed range is from 0 - 150 px/sec. Please try a different numbers.";
+            return;
+        } else {
+            isLimit = false;
     }}
-    
+
     song.play();
 
     car1.start();
@@ -102,3 +102,13 @@ function displayResult() {
 }
 
 function isFloat(x) { return !!(x % 1); }
+
+function updateGraphDynamically() {
+    const time = (elapsedTime / 1000).toFixed(1);
+    updateGraph('Car 1', time, car1.position);
+    updateGraph('Car 2', time, car2.position);
+}
+
+window.onload = function() {
+    initializeGraph();
+};
