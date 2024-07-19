@@ -1,51 +1,59 @@
 class Car {
-    constructor(elementId, speed) {
-        this.element = document.getElementById(elementId);
+    constructor(texture, x, y, speed, anchors) {
+        this.sprite = new PIXI.Sprite(texture);
+        this.sprite.x = x;
+        this.sprite.y = y;
+
+        this.sprite.anchor.set(anchors);
         this.speed = speed;
         this.position = 0;
-        this.interval = null;
         this.finishTime = null;
+
+        (this.sprite).width = 50;  // Set width of car
+        (this.sprite).height = 164050/6117;
     }
+
+    setcolor(color){
+        (this.sprite).tint = color;
+        }
 
     setSpeed(speed) {
         this.speed = speed;
     }
 
-    start() {
-        const gridWidth = document.querySelector('.grid').clientWidth;
-        const maxPosition = gridWidth - 50 - 31; // Assuming car width is 50px
-        const totalTime = 10 * 1000; // 10 seconds in milliseconds
-        const totalFrames = totalTime / (1000 / 60); // Total frames in 10 seconds
+    setX(x){
+        this.sprite.x = x;
+    }
 
-        let frameCount = 0;
+    start(app) {
+        const gridWidth = app.screen.width;
+        const maxPosition = gridWidth  - this.sprite.width;
 
-        this.interval = setInterval(() => {
-            this.position += (this.speed / 60);
-            if (this.position >= maxPosition) {
-                this.position = maxPosition;
-                this.stop();
-                this.finishTime = (elapsedTime / 1000).toFixed(1); // Record the finish time
+        app.ticker.add((delta) => {
+            this.x += (this.speed) * delta;
+            if (this.x > maxPosition) {
+                     this.x = maxPosition;
             }
+            // if (this.x >= maxPosition) {
+            //     this.x = maxPosition;
+            //     this.stop(app);
+            //     this.finishTime = (elapsedTime / 1000).toFixed(1); // Record the finish time
+            // }
 
-            this.element.style.left = `${this.position}px`;
+            //this.sprite.x = this.position;
 
             // Update the graph every 10 frames (approximately every second)
-            if (frameCount % 10 === 0) {
-                updateGraphDynamically(); // Update the graph as the car moves
-            }
-            frameCount++;
-        }, 1000 / 60); // Update position every frame (60 FPS)
+            
+        });
     }
     
-    stop() {
-        clearInterval(this.interval);
-        this.interval = null;
+    stop(app) {
+        app.ticker.remove(this.move);
     }
 
     reset() {
-        this.stop();
         this.position = 0;
-        this.element.style.left = '0px';
+        this.sprite.x = 0;
         this.finishTime = null;
     }
 }

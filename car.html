@@ -9,10 +9,11 @@
 </head>
 <body>
     <header>
-        <h1>Car Race Simulation</h1>
+        <h1>Car Race Simulation PIXI Version</h1>
     </header>
+    <div class="pixi-container"></div>
     <div class="container">
-        <div class="grid">
+        <!-- <div class="grid">
             <div id="car1" class="car">
                 <img src="Image/image1.png" alt="Car 1">
             </div>
@@ -20,7 +21,7 @@
                 <img src="Image/image2.png" alt="Car 2">
             </div>
             <div class="finish-line"></div>
-        </div>
+        </div> -->
         <div class="controls-container">
             <div class="controls">
                 <div>
@@ -37,9 +38,7 @@
     </div>
 </div>
 <div class = "timer_and_result">
-    <div class="timer">
-        <p>Elapsed Time: <span id="timerDisplay">0.0</span> seconds
-        </p>            
+    <div id="timerDisplay">Elapsed Time: 0.0 seconds</div>           
     </div>
     <div id="result" class="result"></div>
 </div>
@@ -49,11 +48,11 @@
         <canvas id="chart"></canvas>
     </div>
 </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.0/pixi.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="car.js"></script>
     <script src="timer.js"></script>
-    <script src="script.js"></script>
+    <script src="script3.js"></script>
     <script src="position-time-chart.js"></script>
 </body>
 </html>
