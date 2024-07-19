@@ -108,39 +108,41 @@ header {
   font-size: 1.2em;
   color: rgb(29, 93, 129);
   font-family: Bradley Hand, cursive;
+  margin-bottom: 20px;
 }
 
 .chart-wrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100vh; /* Adjust height as needed */
 }
 
 .chart-container {
   position: relative;
-  width: 80%; /* Adjust width to control the size of the chart */
-  max-width: 800px; /* Optional: set a max width */
-  height: 600px; /* Adjust height to control the size of the chart */
-  max-height: 600px; /* Optional: set a max height */
+  width: 80%;
+  max-width: 1000px;
+  height: 600px;
+  max-height: 600px;
+  margin-top: 10px;
 }
 
 @media (max-width: 1200px) {
   .chart-container {
-      height: 500px; /* Adjust height for medium screens */
-      max-height: 500px;
+    height: 500px;
+    max-height: 500px;
   }
 }
 
 @media (max-width: 600px) {
   .chart-container {
-      height: 400px; /* Adjust height for smaller screens */
-      max-height: 400px;
+    height: 400px;
+    max-height: 400px;
   }
 }
 
 canvas#chart {
   width: 100%;
   height: 100%;
+  display: block;
 }
