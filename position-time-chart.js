@@ -111,6 +111,7 @@ function initializeGraph() {
 function updateGraph(carLabel, x, y) {
     chart.data.datasets.forEach(dataset => {
         if (dataset.label === carLabel) {
+            // Push new data point to the dataset
             dataset.data.push({x: parseFloat(x), y: parseFloat(y)});
         }
     });

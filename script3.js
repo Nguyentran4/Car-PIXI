@@ -93,14 +93,18 @@ PIXI.Assets.load('https://static.vecteezy.com/system/resources/previews/009/379/
                 car.x += speedcar1 / 55 * delta; // Move 1 pixels per frame
                 car2.x += speedcar2 / 55 * delta;
 
+                updateGraphDynamically(); // Update the graph as the car moves
+
                 const maxPosition = finishLinePosition - 70;
                 // Stop cars at the finish line and record finish time
                 if (car.x >= maxPosition && !car1FinishTime) {
                     car.x = maxPosition;
+                    speedcar1 = 0;    // changes speed of car1 to 0 (stops car) once it gets to finish line
                     car1FinishTime = (elapsedTime / 1000).toFixed(1);
                 }
                 if (car2.x >= maxPosition && !car2FinishTime) {
                     car2.x = maxPosition;
+                    speedcar2 = 0;    // // changes speed of car2 to 0 (stops car) once it gets to finish line
                     car2FinishTime = (elapsedTime / 1000).toFixed(1);
                 }
 
@@ -119,6 +123,7 @@ PIXI.Assets.load('https://static.vecteezy.com/system/resources/previews/009/379/
             song.pause();
             isRunning = false;
             isResetting = true;
+            resetGraph(); // Reset the graph when the cars are reset
 
             app.ticker.remove(tickerFunction);
             car.x = 0;
@@ -162,6 +167,7 @@ PIXI.Assets.load('https://static.vecteezy.com/system/resources/previews/009/379/
         updateGraph('Car 1', time, car.x);
         updateGraph('Car 2', time, car2.x);
     }
+});
 
     
 
