@@ -163,8 +163,10 @@ PIXI.Assets.load('https://static.vecteezy.com/system/resources/previews/009/379/
         updateGraph('Car 2', time, car2.x);
     }
 
-    window.onload = function () {
-        initializeGraph();
-    };
+    
 
 });
+
+window.onload = function () {
+    initializeGraph();
+};
