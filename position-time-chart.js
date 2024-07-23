@@ -20,23 +20,29 @@ function initializeGraph() {
         type: 'line',
         data: {
             datasets: [{
-                    label: 'Car 1',
-                    data: [],
-                    borderColor: 'rgb(38, 147, 209)',
-                    fill: false,
-
-                },
-                {
-                    label: 'Car 2',
-                    data: [],
-                    borderColor: 'rgb(252, 209, 42)',
-                    fill: false, 
-                },
-            ]
+                label: 'Car 1',
+                data: [],
+                borderColor: 'rgb(38, 147, 209)',
+                fill: false,
+                showLine: true,
+                spanGaps: true
+            },
+            {
+                label: 'Car 2',
+                data: [],
+                borderColor: 'rgb(252, 209, 42)',
+                fill: false,
+                showLine: true,
+                spanGaps: true
+                
+            }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            animation: {
+                duration: 1    // 
+            },
             plugins: {
                 title: {
                     display: true,
@@ -72,7 +78,11 @@ function initializeGraph() {
                         color: 'black' 
                     },
                     min: 0,
-                    max: 10
+                    max: 10,
+                    ticks: {
+                        autoSkip: true,
+                        maxTicksLimit: 20
+                    }
                 },
                 y: {
                     title: {
@@ -90,7 +100,8 @@ function initializeGraph() {
                         color: 'black' 
                     },
                     min: 0,
-                    max: 800
+                    max: 800,
+                    beginAtZero: false  // Ensuring the graph does not automatically reset to zero
                 }
             },
             tooltips: {
@@ -108,15 +119,14 @@ function initializeGraph() {
     });
 }
 
-function updateGraph(carLabel, x, y) {
-    chart.data.datasets.forEach(dataset => {
-        if (dataset.label === carLabel) {
-            // Push new data point to the dataset
-            dataset.data.push({x: parseFloat(x), y: parseFloat(y)});
-        }
-    });
-    chart.update();
+function updateGraph(carLabel, timeInSeconds, newPosition) {
+    const dataset = chart.data.datasets.find(dataset => dataset.label === carLabel);
+    if (dataset) {
+        dataset.data.push({ x: parseFloat(timeInSeconds), y: parseFloat(newPosition) });
+        chart.update();
+    }
 }
+
 
 function resetGraph() {
     chart.data.datasets[0].data = [];

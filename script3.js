@@ -94,17 +94,25 @@ function startRace() {
     let car1FinishTime = null;
     let car2FinishTime = null;
 
+    let nextUpdateTime = 0; // Time when the next graph update is scheduled
+
     const tickerFunction = (delta) => {
         if (isRunning && !isResetting) {
             elapsedTime = Date.now() - startTime;
 
             if (elapsedTime > duration) {
                 endRace(elapsedTime, car1FinishTime, car2FinishTime);
+                updateGraphDynamically(elapsedTime);  // Ensure a final update is done at the end
                 return;
             }
 
             moveCars(delta);
-            updateGraphDynamically(elapsedTime);
+
+            // Update the graph at 500 milliseconds intervals
+            if (elapsedTime >= nextUpdateTime) {
+                updateGraphDynamically(elapsedTime);  // Update positions on the graph
+                nextUpdateTime += 500; // Schedule next update
+            }
 
             const maxPosition = app.screen.width - 120;
             if (carSprites[0].x >= maxPosition && !car1FinishTime) {
@@ -146,6 +154,7 @@ function moveCars(delta) {
     carSprites[0].x += speedcar1 / 55 * delta;
     carSprites[1].x += speedcar2 / 55 * delta;
 }
+
 
 function displayResult(car1FinishTime, car2FinishTime) {
     const resultOverlay = document.querySelector('.result-overlay');
@@ -220,9 +229,12 @@ function resetRace(tickerFunction) {
 }
 
 function updateGraphDynamically(elapsedTime) {
-    const time = (elapsedTime / 1000).toFixed(1);
-    updateGraph('Car 1', time, carSprites[0].x);
-    updateGraph('Car 2', time, carSprites[1].x);
+    const timeInSeconds = (elapsedTime / 1000).toFixed(1); // Format time to one decimal place
+    console.log(`Updating graph at time: ${timeInSeconds}, Car1: ${carSprites[0].x}, Car2: ${carSprites[1].x}`); // Log for debugging purposes
+
+    // Directly call updateGraph for each car
+    updateGraph('Car 1', timeInSeconds, carSprites[0].x);
+    updateGraph('Car 2', timeInSeconds, carSprites[1].x);
 }
 
 function isFloat(x) { return !!(x % 1); }
