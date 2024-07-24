@@ -5,18 +5,16 @@ let isResetting = false;
 const duration = 10000; // Duration in milliseconds (10 seconds)
 
 const app = new PIXI.Application({
-    width: 770,
-    height: 500,
+    width: window.innerWidth,
+    height: window.innerHeight,
     backgroundColor: 0xdff1f6,
 });
+let dragTarget = null;
 document.querySelector('.pixi-container').appendChild(app.view);
-
-const app2 = new PIXI.Application({
-    width: 300,
-    height: 500,
-    backgroundColor: 0xdff1f6,
-});
-document.querySelector('.pixi-container2').appendChild(app2.view);
+app.stage.eventMode = 'static';
+app.stage.hitArea = app.screen;
+app.stage.on('pointerup', onDragEnd);
+app.stage.on('pointerupoutside', onDragEnd);
 
 
 const carSprites = [];
@@ -26,13 +24,21 @@ function loadAssets() {
     return PIXI.Assets.load('https://static.vecteezy.com/system/resources/previews/009/379/324/non_2x/retro-pick-up-car-clipart-design-illustration-free-png.png');
 }
 
-function createCar(texture, tint, yPos) {
+function createCar(texture, tint, yPos, xPos) {
     const car = new PIXI.Sprite(texture);
+
+    //Interact with the car
+    car.eventMode = 'static';
+    car.cursor = 'pointer';
+    car.on('pointerdown', onDragStart, car);
+
+    //Car status
+    car.scale.set(3);
     car.anchor.set(-0.5);
     car.tint = tint;
     car.width = 50;
     car.height = 164050 / 6117;
-    car.x = 0;
+    car.x = xPos;
     car.y = yPos;
     app.stage.addChild(car);
     return car;
@@ -47,10 +53,39 @@ function drawFinishLine() {
     app.stage.addChild(finishLine);
 }
 
+function createBorderBox() {
+    const borderBox = new PIXI.Graphics();
+    
+    // Set position
+    borderBox.position.set(30, 50);
+
+    // Define the size of the square box (adjust size as needed)
+    const boxSize = 45;
+
+    // Draw the square box
+    borderBox.beginFill(0xffffff, 0); // Fully transparent background
+    borderBox.lineStyle(1, 0x39CCD6); // Border color and thickness
+    borderBox.drawRect(0, 0, boxSize, boxSize); // Draw square
+    borderBox.endFill();
+
+    // Scale the box
+    borderBox.scale.set(6);
+
+    // Ensure the borderBox is above other elements
+    borderBox.zIndex = 1;
+    app.stage.addChild(borderBox);
+
+    // Sort children to respect zIndex
+    app.stage.children.sort((a, b) => a.zIndex - b.zIndex);
+}
+
 function initializeCars(texture) {
-    const car1 = createCar(texture, 0xffffff, app.screen.height / 8);
-    const car2 = createCar(texture, 0xB3F6BF, app.screen.height / 2);
-    carSprites.push(car1, car2);
+    const car1 = createCar(texture, 0xffffff, app.screen.height / 3, 350);
+    const car2 = createCar(texture, 0xB3F6BF, app.screen.height / 2, 350);
+    const car3 = createCar(texture, 0xC5327B, app.screen.height / 4, 150);
+    const car4 = createCar(texture, 0x4FE4F6, app.screen.height / 6, 150);
+    const car5 = createCar(texture, 0xF67A31, app.screen.height / 10, 150);
+    carSprites.push(car1, car2, car3, car4, car5);
 }
 
 function setupEventListeners() {
@@ -95,7 +130,8 @@ function startRace() {
     let car2FinishTime = null;
 
     let nextUpdateTime = 0; // Time when the next graph update is scheduled
-
+    carSprites[0].x = 350;
+    carSprites[1].x = 350;
     const tickerFunction = (delta) => {
         if (isRunning && !isResetting) {
             elapsedTime = Date.now() - startTime;
@@ -151,8 +187,8 @@ function startRace() {
 }
 
 function moveCars(delta) {
-    carSprites[0].x += speedcar1 / 55 * delta;
-    carSprites[1].x += speedcar2 / 55 * delta;
+    carSprites[0].x += speedcar1 / 24 * delta;
+    carSprites[1].x += speedcar2 / 24 * delta;
 }
 
 
@@ -177,9 +213,16 @@ function displayResult(car1FinishTime, car2FinishTime) {
         resultText = `Neither car could make it to the finish line within 10 seconds.`;
     }
 
-    resultOverlay.innerHTML = resultText;
+    resultOverlay.innerHTML = `
+    ${resultText}
+    <br> <button id="resetEverythingButton">Reset</button>
+`;
     pixiContainer.classList.add('blur');
     resultOverlay.classList.add('show-result');
+
+    document.getElementById('resetEverythingButton').addEventListener('click', () => {
+        resetRace();
+    });
 }
 
 function resetRace() {
@@ -188,7 +231,7 @@ function resetRace() {
     resetGraph();
 
     app.ticker.remove();
-    carSprites.forEach(car => car.x = 0);
+    carSprites.forEach(car => car.x = 350);
 
     document.getElementById('startButton').disabled = false;
     document.getElementById('resetButton').disabled = true;
@@ -212,7 +255,7 @@ function resetRace(tickerFunction) {
     resetGraph();
 
     app.ticker.remove(tickerFunction);
-    carSprites.forEach(car => car.x = 0);
+    carSprites.forEach(car => car.x = 350);
 
     document.getElementById('startButton').disabled = false;
     document.getElementById('resetButton').disabled = true;
@@ -245,6 +288,36 @@ window.onload = function () {
     loadAssets().then(texture => {
         initializeCars(texture);
         drawFinishLine();
+        createBorderBox();
         setupEventListeners();
     });
 };
+
+
+function onDragMove(event)
+{
+    if (dragTarget)
+    {
+        dragTarget.parent.toLocal(event.global, null, dragTarget.position);
+    }
+}
+
+function onDragStart()
+{
+    // Store a reference to the data
+    // * The reason for this is because of multitouch *
+    // * We want to track the movement of this particular touch *
+    this.alpha = 0.5;
+    dragTarget = this;
+    app.stage.on('pointermove', onDragMove);
+}
+
+function onDragEnd()
+{
+    if (dragTarget)
+    {
+        app.stage.off('pointermove', onDragMove);
+        dragTarget.alpha = 1;
+        dragTarget = null;
+    }
+}
