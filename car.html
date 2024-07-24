@@ -8,34 +8,33 @@
     
 </head>
 <body>
-    <header>
-        <h1>Car Race Simulation PIXI Version</h1>
-    </header>
+    
     
     <div class="container">
-        <div class="pixi-container2"></div>
+        
         <div class="pixi-container">
-        </div>
-        <div class="result-overlay"></div>
-        <div class="controls-container">
-            <div class="controls">
-                <div>
-                    <label for="speed1">Car 1 Speed (px/sec): </label>
-                    <input type="number" id="speed1" value="50" min="0" max="150">
-                </div>
-                <div>
-                    <label for="speed2">Car 2 Speed (px/sec): </label>
-                    <input type="number" id="speed2" value="50" min="0" max="150">
-                </div>
-                <button id="startButton">Start Race</button>
-                <button id="resetButton">Reset</button>
-                <div class = "timer_and_result">
-                    <div id="timerDisplay">Elapsed Time: 0.0 seconds</div>           
+            <div class="controls-container">
+                <div class="controls">
+                    <div>
+                        <label for="speed1">Car 1 Speed (px/sec): </label>
+                        <input type="number" id="speed1" value="50" min="0" max="150">
                     </div>
-                    <div id="result" class="result"></div>
+                    <div>
+                        <label for="speed2">Car 2 Speed (px/sec): </label>
+                        <input type="number" id="speed2" value="50" min="0" max="150">
+                    </div>
+                    <button id="startButton">Start Race</button>
+                    <button id="resetButton">Reset</button>
+                    <div class = "timer_and_result">
+                        <div id="timerDisplay">Elapsed Time: 0.0 seconds</div>           
+                        </div>
+                        <div id="result" class="result"></div>
+                    </div>
                 </div>
-            </div>
-    </div>
+        </div>
+        <div class="result-overlay">
+        </div>
+</div>
 </div>
 
 
@@ -44,11 +43,13 @@
         <canvas id="chart"></canvas>
     </div>
 </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.0/pixi.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="car.js"></script>
     <script src="timer.js"></script>
     <script src="script3.js"></script>
+    <script src="pixi_container2.js"></script>
     <script src="position-time-chart.js"></script>
 </body>
 </html>

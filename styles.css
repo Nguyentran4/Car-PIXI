@@ -7,33 +7,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-header {
-  margin-top: 100px;
-  margin-right: 500px;
-  transform: translate(50%,-50%);
-    text-transform: uppercase;
-    font-family: verdana;
-    font-size: 1em;
-    font-weight: 500;
-    color: #123d99;
-    text-shadow: 1px 1px 1px #919191,
-        1px 2px 1px #919191,
-        1px 3px 1px #919191,
-        1px 4px 1px #919191,
-        1px 5px 1px #919191,
-        1px 6px 1px #919191,
-        1px 7px 1px #919191,
-        1px 8px 1px #919191,
-        1px 9px 1px #919191,
-        1px 10px 1px #919191,
-    1px 18px 6px rgba(16,16,16,0.4),
-    1px 22px 10px rgba(16,16,16,0.2),
-    1px 25px 35px rgba(16,16,16,0.2),
-    1px 30px 60px rgba(16,16,16,0.4);
-}
-
-
-
 .container {
   display: flex;
   flex-direction: row;
@@ -69,39 +42,37 @@ header {
   display: none;
 }
 
+#resetEverythingButton {
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#resetEverythingButton:hover {
+  background-color: #0056b3;
+}
+
 .show-result {
   display: block;
 }
 
-
-.grid {
-  position: relative;
-  width: 700px;
-  height: 150px; /* Increased height to accommodate images */
-  border: 2px solid #000;
-  margin-bottom: 20px;
-  margin-right: 50px; /* Add spacing between grid and controls */
-}
-
 .car {
   position: absolute;
-}
-
-.car img {
-  width: 50px; /* Adjust the width of the car images as needed */
-  height: auto;
-}
-
-#car1 {
-  left: 0;
-  top: 25%; /* Place car1 at 25% from the top */
-  transform: translateY(-50%);
-}
-
-#car2 {
-  left: 0;
-  top: 75%; /* Place car2 at 75% from the top */
-  transform: translateY(-50%);
 }
 
 
@@ -114,16 +85,26 @@ header {
   z-index: -1;
 }
 
+.borderBox {
+  transform: scale(6);
+  position: absolute;
+  top: 200px;
+  left: 130px;
+  background: rgba(255, 255, 255, 0); /* Fully transparent background */
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1; /* Ensure the controls are above the PIXI canvas */
+  border: 0.1px solid rgb(57, 204, 214); /* Solid black border */
+}
+
 .controls-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-left: 100px;
-/*
-  border-style: solid;
-  border-width: 2px 2px;*/
-  
+  position: absolute;
+  top: 400px;
+  left: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 10; /* Ensure the controls are above the PIXI canvas */
 }
 
 .controls {
